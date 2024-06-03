@@ -19,7 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService service;
@@ -49,7 +49,7 @@ public class UserController {
 
     @Transactional
     @PostMapping("/register")
-    public ResponseEntity<UserResponse> registerUser(@RequestBody UserRequest r) {
+    public ResponseEntity<UserResponse> save(@RequestBody @Valid UserRequest r) {
         var saved = service.save(r);
 
         var uri = ServletUriComponentsBuilder

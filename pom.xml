@@ -11,7 +11,7 @@
 	<groupId>br.com.fiap</groupId>
 	<artifactId>seareport</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>seareport</name>
 	<description>Uma plataforma de denúncia de crimes ocorridos em alto-mar e áreas litorâneas com gamificação.</description>
 	<properties>
@@ -92,6 +92,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.4.1</version>
 			</plugin>
 		</plugins>
 	</build>
