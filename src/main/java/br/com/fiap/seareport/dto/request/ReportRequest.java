@@ -4,7 +4,9 @@ import br.com.fiap.seareport.entity.Location;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import lombok.Builder;
 
+@Builder
 public record ReportRequest(
         @NotBlank(message = "Descricao é obrigatório!")
         String description,

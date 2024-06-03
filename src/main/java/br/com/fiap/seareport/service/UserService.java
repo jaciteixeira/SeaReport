@@ -25,9 +25,8 @@ public class UserService implements ServiceDTO<User, UserRequest, UserResponse> 
     public User toEntity(UserRequest r) {
         if (Objects.isNull(r)) return null;
         return User.builder()
-                .name(r.email())
                 .password(passwordEncoder.encode(r.password()))
-                .email(r.email())
+                .username(r.username())
                 .phoneNumber(r.phoneNumber())
                 .build();
     }
@@ -37,7 +36,7 @@ public class UserService implements ServiceDTO<User, UserRequest, UserResponse> 
         if (Objects.isNull(e)) return null;
         return UserResponse.builder()
                 .id(e.getId())
-                .name(e.getName())
+                .xp(e.getXp())
                 .username(e.getUsername())
                 .build();
     }
@@ -59,9 +58,14 @@ public class UserService implements ServiceDTO<User, UserRequest, UserResponse> 
 
     @Override
     public User save(UserRequest r) {
-//        var user = toEntity(r);
+        var user = toEntity(r);
+        user.setXp(0);
 //        user.setPassword(passwordEncoder.encode(r.password()));
-        return repo.save(toEntity(r));
+        return repo.save(user);
+    }
+
+    public User save(User user){
+        return repo.save(user);
     }
 
     public User findByUsername(String username) {

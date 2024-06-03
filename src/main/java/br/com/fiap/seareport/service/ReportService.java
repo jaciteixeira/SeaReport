@@ -4,6 +4,7 @@ import br.com.fiap.seareport.dto.ServiceDTO;
 import br.com.fiap.seareport.dto.request.ReportRequest;
 import br.com.fiap.seareport.dto.response.ReportResponse;
 import br.com.fiap.seareport.entity.Report;
+import br.com.fiap.seareport.entity.User;
 import br.com.fiap.seareport.repository.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -29,6 +30,7 @@ public class ReportService implements ServiceDTO<Report, ReportRequest, ReportRe
                 .description(r.description())
                 .user(user)
                 .location(r.location())
+                .approved(false)
                 .build();
     }
 
@@ -39,7 +41,7 @@ public class ReportService implements ServiceDTO<Report, ReportRequest, ReportRe
                 .id(e.getId())
                 .dateReport(e.getDateReport())
                 .description(e.getDescription())
-                .isProcessed(e.getIsProcessed())
+                .approved(e.getApproved())
                 .location(e.getLocation())
                 .build();
     }
@@ -61,6 +63,9 @@ public class ReportService implements ServiceDTO<Report, ReportRequest, ReportRe
 
     @Override
     public Report save(ReportRequest r) {
+        User user = userService.findById(r.userId());
+        user.setXp(user.getXp()+100);
+        userService.save(user);
         return repo.save(toEntity(r));
     }
 
@@ -69,6 +74,6 @@ public class ReportService implements ServiceDTO<Report, ReportRequest, ReportRe
     }
 
     public List<Report> getUnprocessedReports() {
-        return repo.findByIsProcessedFalse();
+        return repo.findByApprovedFalse();
     }
 }

@@ -4,7 +4,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
 
+@Builder
 public record UserRequest(
 
         @NotBlank
@@ -18,7 +20,8 @@ public record UserRequest(
         @NotBlank
         @NotNull(message = "a senha é obrigatório!")
         String password,
-        String phoneNumber
+        String phoneNumber,
+        Integer xp
 
 ) {
 }

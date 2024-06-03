@@ -33,12 +33,13 @@ public class Report {
     @Column(name = "DATE_REPORT")
     private LocalDateTime dateReport;
 
-    @Column(name = "PROCESSED")
-    private Boolean isProcessed;
+    @Column(name = "APPROVED")
+    private Boolean approved;
+
 
     @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(
-            name = "LOCATION",
+            name = "ID_LOCATION",
             referencedColumnName = "ID_LOCATION",
             foreignKey = @ForeignKey(name = "FK_REPORT_LOCATION")
     )
@@ -46,7 +47,7 @@ public class Report {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(
-            name = "USER",
+            name = "ID_USER",
             referencedColumnName = "ID_USER",
             foreignKey = @ForeignKey(name = "FK_REPORT_USER")
     )
