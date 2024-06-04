@@ -8,7 +8,7 @@ services:
   seareport-db:
     image: 'mariadb:latest'
     command: --default-authentication-plugin=mysql_native_password --general_log=ON --bind_address=0.0.0.0
-    restart: always
+#    restart: always
     environment:
       - 'DB_SERVER=${DB_DESENV_NAME:-SeaReport}'
       - 'DB_PORT=${DB_DESENV_PORT:-3306}'
@@ -28,10 +28,12 @@ services:
     image: seareport:latest
     ports:
       - "8080:8080"
+    depends_on:
+      - seareport-db
     volumes:
       - data-volume:/app/data
     networks:
       - vpn-sea
 
-volumes:
-  data-volume:
+#volumes:
+#  data-volume:

@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://${DB_PROD_SERVER:seareport-db}:${DB_PROD_PORT:3306}/${DB_PROD_NAME:SeaReport}?createDatabaseIfNotExist=true
+    username: ${DB_PROD_USERNAME:root}
+    password: ${DB_PROD_PASSWORD:root}
+  jpa:
+    show-sql: true
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MariaDBDialect
