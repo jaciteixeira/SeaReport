@@ -3,6 +3,7 @@ package br.com.fiap.seareport.service;
 import br.com.fiap.seareport.dto.ServiceDTO;
 import br.com.fiap.seareport.dto.request.ReportRequest;
 import br.com.fiap.seareport.dto.response.ReportResponse;
+import br.com.fiap.seareport.entity.Category;
 import br.com.fiap.seareport.entity.Report;
 import br.com.fiap.seareport.entity.User;
 import br.com.fiap.seareport.repository.ReportRepository;
@@ -23,16 +24,22 @@ public class ReportService implements ServiceDTO<Report, ReportRequest, ReportRe
 
     @Override
     public Report toEntity(ReportRequest r) {
-        if (Objects.isNull(r)) return null;
+        if (Objects.isNull(r) ) return null;
         var user = userService.findById(r.userId());
+        // Mapeia o ID da categoria para a enumeração correspondente
+        Category category = Category.fromId(r.category());
         return Report.builder()
                 .dateReport(LocalDateTime.now())
                 .description(r.description())
                 .user(user)
                 .location(r.location())
+                .category(category)
                 .approved(false)
                 .build();
     }
+
+
+
 
     @Override
     public ReportResponse toResponse(Report e) {
@@ -43,6 +50,7 @@ public class ReportService implements ServiceDTO<Report, ReportRequest, ReportRe
                 .description(e.getDescription())
                 .approved(e.getApproved())
                 .location(e.getLocation())
+                .category(e.getCategory().getName())
                 .build();
     }
 

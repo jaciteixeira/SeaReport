@@ -9,11 +9,11 @@ import lombok.Builder;
 @Builder
 public record UserRequest(
 
-        @NotBlank
-        String name,
+//        @NotBlank
+//        String name,
         @NotBlank(message = "O email é obrigatório!")
-        @Email(message = "Email inválido!")
-        String email,
+//        @Email(message = "Email inválido!")
+//        String email,
         @NotBlank
         String username,
         @Pattern(regexp = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}")

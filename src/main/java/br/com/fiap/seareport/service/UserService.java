@@ -2,6 +2,7 @@ package br.com.fiap.seareport.service;
 
 import br.com.fiap.seareport.dto.ServiceDTO;
 import br.com.fiap.seareport.dto.request.UserRequest;
+import br.com.fiap.seareport.dto.request.UserRequestLogin;
 import br.com.fiap.seareport.dto.response.UserResponse;
 import br.com.fiap.seareport.entity.User;
 import br.com.fiap.seareport.repository.UserRepository;
@@ -68,7 +69,11 @@ public class UserService implements ServiceDTO<User, UserRequest, UserResponse> 
         return repo.save(user);
     }
 
-    public User findByUsername(String username) {
-        return repo.findByUsername(username);
+    public User findByUsername(UserRequestLogin r) {
+        var user = repo.findByUsername(r.username());
+        if (user != null && passwordEncoder.matches(r.password(), user.getPassword())){
+            return user;
+        }
+        return null;
     }
 }

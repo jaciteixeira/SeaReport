@@ -1,8 +1,9 @@
 package br.com.fiap.seareport.controller;
 
 import br.com.fiap.seareport.dto.request.ReportRequest;
+import br.com.fiap.seareport.dto.response.CategoryResponse;
 import br.com.fiap.seareport.dto.response.ReportResponse;
-import br.com.fiap.seareport.entity.Report;
+import br.com.fiap.seareport.entity.Category;
 import br.com.fiap.seareport.service.ReportService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -36,9 +38,9 @@ public class ReportController {
         return ResponseEntity.created(uri).body(service.toResponse(saved));
     }
 
-    @GetMapping("/user")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<Page<ReportResponse>> findReportByUserId(
-            @RequestParam(name = "userId", required = false) Long userId,
+            @PathVariable Long userId,
             @RequestParam(
                     value = "page",
                     required = false,
@@ -76,18 +78,31 @@ public class ReportController {
                     required = false,
                     defaultValue = "10") int size
     ) {
-        List<Report> reports = service.getUnprocessedReports();
+        var reports = service.getUnprocessedReports().stream()
+                .map(service::toResponse)
+                .toList();
 
         Pageable pageable = PageRequest.of(
                 page,
                 size,
-                Sort.Direction.ASC );
+                Sort.Direction.ASC,
+                "dateReport");
 
-        List<ReportResponse> reportResponses = reports.stream()
-                .map(service::toResponse)
-                .collect(Collectors.toList());
-        Page<ReportResponse> pagina = new PageImpl<>( reportResponses, pageable, reportResponses.size() );
+        Page<ReportResponse> pagina = new PageImpl<>( reports, pageable, reports.size() );
 
         return ResponseEntity.ok( pagina );
+    }
+
+    @GetMapping("/category")
+    public ResponseEntity<List<CategoryResponse>> findCategorias() {
+        List<CategoryResponse> categorias = Arrays.stream(Category.values())
+                .map(categoria -> CategoryResponse.builder()
+                        .id(categoria.getId())
+                        .name(categoria.getName())
+                        .description(categoria.getDescription())
+                        .build()
+                )
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(categorias);
     }
 }

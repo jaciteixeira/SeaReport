@@ -42,7 +42,7 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<Page<PostResponse>> findAll(
-            @RequestParam(name = "palavra-chave", required = false) String palavra,
+            @RequestParam(name = "word", required = false) String word,
             @RequestParam(
                     value = "page",
                     required = false,
@@ -53,13 +53,13 @@ public class PostController {
                     defaultValue = "10") int size
     ) {
         var post = Post.builder()
-                .content(palavra)
+                .contentPost(word)
                 .build();
 
         ExampleMatcher matcher = ExampleMatcher.matchingAll()
                 .withIgnoreNullValues()
                 .withIgnoreCase()
-                .withMatcher("content", match -> match.contains());
+                .withMatcher("contentPost", match -> match.contains());
 
         Example<Post> example = Example.of(post, matcher);
 
@@ -67,15 +67,15 @@ public class PostController {
                 page,
                 size,
                 Sort.Direction.ASC,
-                "nomeFantasia" );
+                "word" );
 
-        var entity = service.findAll( example );
+        var posts = service.findAll( example )
+                .stream().map( service::toResponse )
+                .toList();
 
-        if (Objects.isNull( entity ) || entity.isEmpty()) return ResponseEntity.notFound().build();
+        if (Objects.isNull( posts ) || posts.isEmpty()) return ResponseEntity.notFound().build();
 
-        var response = entity.stream().map( service::toResponse ).toList();
-
-        Page<PostResponse> pagina = new PageImpl<>( response, pageable, response.size() );
+        Page<PostResponse> pagina = new PageImpl<>( posts, pageable, posts.size() );
 
         return ResponseEntity.ok( pagina );
    }

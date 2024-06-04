@@ -2,13 +2,13 @@ package br.com.fiap.seareport.controller;
 
 import br.com.fiap.seareport.dto.request.UserRequest;
 import br.com.fiap.seareport.dto.request.UserRequestLogin;
+import br.com.fiap.seareport.dto.response.ReportResponse;
 import br.com.fiap.seareport.dto.response.UserResponse;
 import br.com.fiap.seareport.entity.User;
 import br.com.fiap.seareport.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/user")
@@ -24,12 +25,17 @@ public class UserController {
     @Autowired
     private UserService service;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
     @GetMapping
-    public ResponseEntity<List<UserResponse>> findAll(
-            @RequestParam(name = "username", required = false) String username
+    public ResponseEntity<Page<UserResponse>> findAll(
+            @RequestParam(name = "username", required = false) String username,
+            @RequestParam(
+                    value = "page",
+                    required = false,
+                    defaultValue = "0") int page,
+            @RequestParam(
+                    value = "size",
+                    required = false,
+                    defaultValue = "10") int size
     ) {
         var item = User.builder()
                 .username(username)
@@ -42,13 +48,22 @@ public class UserController {
 
         Example<User> example = Example.of(item, matcher);
 
-        List<User> users = service.findAll(example);
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                Sort.Direction.ASC,
+                "username");
 
-        return ResponseEntity.ok(users.stream().map(service::toResponse).toList());
+        var users = service.findAll(example).stream()
+                .map(service::toResponse)
+                .toList();
+        Page<UserResponse> pagina = new PageImpl<>( users, pageable, users.size() );
+
+        return ResponseEntity.ok( pagina );
     }
 
     @Transactional
-    @PostMapping("/register")
+    @PostMapping()
     public ResponseEntity<UserResponse> save(@RequestBody @Valid UserRequest r) {
         var saved = service.save(r);
 
@@ -63,10 +78,9 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<UserResponse> login(@RequestBody UserRequestLogin r) {
-        var user = service.findByUsername(r.username());if (user != null && passwordEncoder.matches(r.password(), user.getPassword())) {
-            return ResponseEntity.ok(service.toResponse(user));
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+        var user = service.findByUsername(r);
+        if (Objects.isNull(user)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        return ResponseEntity.ok(service.toResponse(user));
     }
 }

@@ -12,7 +12,9 @@ import org.springframework.hateoas.RepresentationModel;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "T_OP_SR_USER")
+@Table(name = "T_OP_SR_USER", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_USERNAME", columnNames = "USER_NAME")
+})
 public class User extends RepresentationModel<User> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_OP_SR_USER")

@@ -11,3 +11,9 @@ public class SeareportApplication {
 	}
 
 }
+
+//TODO: Deploy em nuvem
+//TODO: HATEOAS
+//TODO: Links dos Deploys em nuvem, com instruções para acessos e testes (usuário, senha, etc)
+//TODO: Link do Vídeo demonstrando a software funcionando
+//TODO: Link do Vídeo Pich com duração máxima de 3 minutos.

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class PostService implements ServiceDTO<Post, PostRequest, PostResponse> {
@@ -20,17 +21,19 @@ public class PostService implements ServiceDTO<Post, PostRequest, PostResponse> 
 
     @Override
     public Post toEntity(PostRequest r) {
+        if (Objects.isNull(r)) return null;
         return Post.builder()
-                .content(r.content())
+                .contentPost(r.contentPost())
                 .date(LocalDateTime.now())
                 .build();
     }
 
     @Override
     public PostResponse toResponse(Post e) {
+        if (Objects.isNull(e)) return null;
         return PostResponse.builder()
                 .id(e.getId())
-                .content(e.getContent())
+                .contentPost(e.getContentPost())
                 .date(e.getDate())
                 .build();
     }

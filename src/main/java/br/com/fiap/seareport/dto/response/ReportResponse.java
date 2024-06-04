@@ -11,6 +11,7 @@ public record ReportResponse(
         String description,
         Location location,
         LocalDateTime dateReport,
+        String category,
         Boolean approved
 ) {
 }

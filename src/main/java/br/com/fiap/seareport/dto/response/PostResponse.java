@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Builder
 public record PostResponse(
         Long id,
-        String content,
+        String contentPost,
         LocalDateTime date
 ) {
 }

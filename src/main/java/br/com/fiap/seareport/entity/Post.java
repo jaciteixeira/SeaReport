@@ -21,8 +21,8 @@ public class Post {
     @Column(name = "ID_POST")
     private Long id;
 
-    @Column(name = "CONTENT_POST")
-    private String content;
+    @Column(name = "CONTENT_POST" , length = 4000, nullable = false)
+    private String contentPost;
 
     @Column(name = "DATE_POST")
     private LocalDateTime date;

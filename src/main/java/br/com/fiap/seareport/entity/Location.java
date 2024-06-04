@@ -20,9 +20,9 @@ public class Location {
     private Long id;
 
     @Column(name = "LAT")
-    private Long latitude;
+    private Double latitude;
 
     @Column(name = "LON")
-    private Long longitude;
+    private Double longitude;
 
 }

@@ -24,18 +24,14 @@ public class Report {
     @Column(name = "DESC_REPORT")
     private String description;
 
-//    @Column(name = "LAT")
-//    private Long latitude;
-//
-//    @Column(name = "LON")
-//    private Long longitude;
-
     @Column(name = "DATE_REPORT")
     private LocalDateTime dateReport;
 
+    @Column(name = "CATEGORY")
+    private Category category;
+
     @Column(name = "APPROVED")
     private Boolean approved;
-
 
     @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(

@@ -2,9 +2,16 @@ spring:
   application:
     name: SeaReport
   profiles:
-    active: desenvolvimento
+    active: homologacao
   thymeleaf:
     check-template-location: false
+  servlet:
+    multipart:
+      max-file-size: 1GB
+      max-request-size: 1GB
+  # Development properties (also used for docker-compose)
+  config:
+    import: optional:file:.env[.properties]
 
 server:
   port: 80
