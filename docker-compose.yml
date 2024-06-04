@@ -1,0 +1,37 @@
+version: '3.8'
+
+networks:
+  vpn-sea:
+    driver: bridge
+
+services:
+  seareport-db:
+    image: 'mariadb:latest'
+    command: --default-authentication-plugin=mysql_native_password --general_log=ON --bind_address=0.0.0.0
+    restart: always
+    environment:
+      - 'DB_SERVER=${DB_DESENV_NAME:-SeaReport}'
+      - 'DB_PORT=${DB_DESENV_PORT:-3306}'
+      - 'DB_PASSWORD=${DB_DESENV_PASSWORD:-root}'
+      - 'DB_USERNAME=${DB_DESENV_USERNAME:-root}'
+      - 'MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-root}'
+      - 'MARIADB_ROOT_HOST=%'
+    ports:
+      - 3306:3306
+    networks:
+      - vpn-sea
+
+  seareport:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: seareport:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - data-volume:/app/data
+    networks:
+      - vpn-sea
+
+volumes:
+  data-volume:
