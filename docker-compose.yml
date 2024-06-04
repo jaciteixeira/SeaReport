@@ -1,39 +1,55 @@
-version: '3.8'
-
 networks:
   vpn-sea:
     driver: bridge
 
+volumes:
+  data-volume:
+  seareport:
+    name: drive-seareport
+  mariadb-data:
+    name: mariadb-data
+
 services:
+
   seareport-db:
+
     image: 'mariadb:latest'
     command: --default-authentication-plugin=mysql_native_password --general_log=ON --bind_address=0.0.0.0
-#    restart: always
+    restart: always
     environment:
-      - 'DB_SERVER=${DB_DESENV_NAME:-SeaReport}'
-      - 'DB_PORT=${DB_DESENV_PORT:-3306}'
-      - 'DB_PASSWORD=${DB_DESENV_PASSWORD:-root}'
-      - 'DB_USERNAME=${DB_DESENV_USERNAME:-root}'
-      - 'MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-root}'
-      - 'MARIADB_ROOT_HOST=%'
+      DB_SERVER: ${DB_SERVER:-seareport-db}
+      DB_NAME: ${DB_NAME:-seareport}
+      DB_PORT: ${DB_PORT:-3306}
+      DB_PASSWORD: ${DB_PASSWORD:-root}
+      DB_USERNAME: ${DB_USER:-root}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
+      MARIADB_ROOT_HOST: '%'
     ports:
+      - 3307:3306
       - 3306:3306
+    volumes:
+      - "./mariadb-data/data:/var/lib/mysql/data/"
+      - "./mariadb-data/logs:/var/lib/mysql/logs/"
     networks:
       - vpn-sea
 
-  seareport:
+  seareport-app:
+
     build:
       context: .
       dockerfile: Dockerfile
     image: seareport:latest
     ports:
-      - "8080:8080"
+      - "80:8080"
     depends_on:
       - seareport-db
+    environment:
+      DB_SERVER: seareport-db
+      DB_PORT: ${DB_PORT:-3306}
+      DB_NAME: ${DB_NAME:-seareport}
+      DB_USER: ${DB_USER:-root}
+      DB_PASSWORD: ${DB_PASSWORD:-root}
     volumes:
       - data-volume:/app/data
     networks:
       - vpn-sea
-
-#volumes:
-#  data-volume:
