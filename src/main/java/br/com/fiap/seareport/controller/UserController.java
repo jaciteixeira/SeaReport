@@ -80,12 +80,7 @@ public class UserController {
     public ResponseEntity<UserResponse> login(@RequestBody String auth) {
         User user = service.findByAuth(auth);
 
-        var uri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path( "/{id}" )
-                .buildAndExpand( user.getId() )
-                .toUri();
-
-        return ResponseEntity.ok(service.toResponse(user));
+        System.out.println(service.toResponse(user));
+        return ResponseEntity.ok().body(service.toResponse(user));
     }
 }

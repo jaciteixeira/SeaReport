@@ -32,7 +32,7 @@ public class LikeService implements ServiceDTO<Like, LikeRequest, LikeResponse, 
 
     @Override
     public LikeResponse toResponse(Like e) {
-        if (Objects.isNull(e)) return null;
+        if (Objects.isNull(e) || (e.getPost() == null && e.getUser() ==null)) return null;
         var user = userService.findById(e.getUser().getId());
         var post = postService.findById(e.getPost().getId());
         if (Objects.isNull(user) || Objects.isNull(post)) return null;
