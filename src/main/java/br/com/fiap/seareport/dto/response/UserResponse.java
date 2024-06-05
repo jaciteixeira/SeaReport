@@ -8,6 +8,7 @@ import lombok.Builder;
 public record UserResponse(
         Long id,
         String username,
-        Integer xp
+        Integer xp,
+        AuthResponse auth
 ) {
 }

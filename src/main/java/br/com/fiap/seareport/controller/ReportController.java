@@ -105,4 +105,10 @@ public class ReportController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(categorias);
     }
+
+    @PostMapping("/approve-report/{id}")
+    public ResponseEntity<ReportResponse> approveReport(@PathVariable Long id) {
+        var approved = service.approve(id);
+        return ResponseEntity.ok(service.toResponse(approved));
+    }
 }

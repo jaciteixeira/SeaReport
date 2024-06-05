@@ -76,10 +76,15 @@ public class UserController {
         return ResponseEntity.created(uri).body(service.toResponse(saved));
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<UserResponse> login(@RequestBody UserRequestLogin r) {
-        var user = service.findByUsername(r);
-        if (Objects.isNull(user)) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    @PostMapping("/auth")
+    public ResponseEntity<UserResponse> login(@RequestBody String auth) {
+        User user = service.findByAuth(auth);
+
+        var uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path( "/{id}" )
+                .buildAndExpand( user.getId() )
+                .toUri();
 
         return ResponseEntity.ok(service.toResponse(user));
     }

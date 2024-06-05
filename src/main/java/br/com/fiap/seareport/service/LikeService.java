@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class LikeService implements ServiceDTO<Like, LikeRequest, LikeResponse> {
+public class LikeService implements ServiceDTO<Like, LikeRequest, LikeResponse, Long> {
 
     @Autowired private LikeRepository repo;
     @Autowired private UserService userService;

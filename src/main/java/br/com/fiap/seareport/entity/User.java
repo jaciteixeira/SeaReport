@@ -33,4 +33,11 @@ public class User extends RepresentationModel<User> {
     private String phoneNumber;
     @Column(name = "XP")
     private Integer xp;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(
+            name = "ID_AUTH",
+            referencedColumnName = "ID_AUTH",
+            foreignKey = @ForeignKey(name = "FK_USER_AUTH")
+    )
+    private Auth auth;
 }

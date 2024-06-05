@@ -21,7 +21,9 @@ public record UserRequest(
         @NotNull(message = "a senha é obrigatório!")
         String password,
         String phoneNumber,
-        Integer xp
+        Integer xp,
+        @NotNull
+        AuthRequest auth
 
 ) {
 }

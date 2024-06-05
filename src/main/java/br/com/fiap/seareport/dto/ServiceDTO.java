@@ -4,7 +4,7 @@ import org.springframework.data.domain.Example;
 
 import java.util.List;
 
-public interface ServiceDTO <Entity, Request, Response>{
+public interface ServiceDTO <Entity, Request, Response, ID>{
 
     Entity toEntity(Request r);
 
@@ -14,7 +14,7 @@ public interface ServiceDTO <Entity, Request, Response>{
 
     List<Entity> findAll(Example<Entity> example);
 
-    Entity findById (Long id);
+    Entity findById (ID id);
 
     Entity save(Request r);
 }

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class PostService implements ServiceDTO<Post, PostRequest, PostResponse> {
+public class PostService implements ServiceDTO<Post, PostRequest, PostResponse, Long> {
 
     @Autowired
     private PostRepository repo;

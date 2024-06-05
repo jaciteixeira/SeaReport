@@ -15,9 +15,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class UserService implements ServiceDTO<User, UserRequest, UserResponse> {
+public class UserService implements ServiceDTO<User, UserRequest, UserResponse, Long> {
     @Autowired
     private UserRepository repo;
+    @Autowired
+    private AuthService authService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -29,6 +31,7 @@ public class UserService implements ServiceDTO<User, UserRequest, UserResponse> 
                 .password(passwordEncoder.encode(r.password()))
                 .username(r.username())
                 .phoneNumber(r.phoneNumber())
+                .auth(authService.toEntity(r.auth()))
                 .build();
     }
 
@@ -39,6 +42,7 @@ public class UserService implements ServiceDTO<User, UserRequest, UserResponse> 
                 .id(e.getId())
                 .xp(e.getXp())
                 .username(e.getUsername())
+                .auth(authService.toResponse(e.getAuth()))
                 .build();
     }
 
@@ -75,5 +79,10 @@ public class UserService implements ServiceDTO<User, UserRequest, UserResponse> 
             return user;
         }
         return null;
+    }
+
+    public User findByAuth(String authId) {
+        var auth = authService.findById(authId);
+        return repo.findByAuth(auth);
     }
 }

@@ -10,7 +10,8 @@ public enum Category {
     DERRAMAMENTO_OLEO(2L, "Derramamento de Óleo", "Relatos de derramamento de óleo no mar."),
     PESCA_ILEGAL(3L, "Pesca Ilegal", "Relatos de pesca ilegal."),
     PESCA_PREDATORIA(4L, "Pesca Predatória", "Relatos de pesca predatória."),
-    OUTROS(5L, "Outros", "Qualquer outro tipo de incidente não coberto pelas categorias acima.");
+    OUTROS(5L, "Outros", "Qualquer outro tipo de incidente não coberto pelas categorias acima."),
+    PIRATARIA(6L, "Pirataria", "Relatos de pirataria");
 
     private Long id;
     private String name;

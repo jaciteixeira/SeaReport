@@ -2,7 +2,7 @@ spring:
   application:
     name: seareport
   profiles:
-    active: desenvolvimento
+    active: homologacao
   thymeleaf:
     check-template-location: false
   servlet:
@@ -13,7 +13,7 @@ spring:
     import: optional:file:.env[.properties]
 
 server:
-  port: 8080
+  port: 80
 
 springdoc:
   swagger-ui:

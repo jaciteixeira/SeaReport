@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class ReportService implements ServiceDTO<Report, ReportRequest, ReportResponse> {
+public class ReportService implements ServiceDTO<Report, ReportRequest, ReportResponse, Long> {
     @Autowired
     private ReportRepository repo;
     @Autowired
@@ -83,5 +83,13 @@ public class ReportService implements ServiceDTO<Report, ReportRequest, ReportRe
 
     public List<Report> getUnprocessedReports() {
         return repo.findByApprovedFalse();
+    }
+
+    public Report approve(Long id) {
+        var report = repo.findById(id).orElse(null);
+        if (Objects.isNull(report)) return null;
+        report.setApproved(true);
+        repo.save(report);
+        return report;
     }
 }
