@@ -36,32 +36,16 @@ public class LikeController {
         return ResponseEntity.created(uri).body(service.toResponse(saved));
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<Page<LikeResponse>> findByUserId(
+    @GetMapping("/user/{userId}/post/{postId}")
+    public ResponseEntity<LikeResponse> findByIdUserAndIdPost(
             @PathVariable Long userId,
-            @RequestParam(
-                    value = "page",
-                    required = false,
-                    defaultValue = "0") int page,
-            @RequestParam(
-                    value = "size",
-                    required = false,
-                    defaultValue = "10") int size
+            @PathVariable Long postId
     ) {
 
-        Pageable pageable = PageRequest.of(
-                page,
-                size,
-                Sort.Direction.ASC,
-                "word" );
+        var like = service.findByIdUserAndIdPost(userId, postId);
+        if (Objects.isNull( like)) return ResponseEntity.notFound().build();
 
-        var likes = service.findByIdUser(userId).stream().map( service::toResponse )
-                .toList();
-        if (Objects.isNull( likes ) || likes.isEmpty()) return ResponseEntity.notFound().build();
-
-        Page<LikeResponse> pagina = new PageImpl<>( likes, pageable, likes.size() );
-
-        return ResponseEntity.ok( pagina );
+        return ResponseEntity.ok( service.toResponse(like) );
     }
 
     @DeleteMapping("/{id}")

@@ -4,6 +4,8 @@ import br.com.fiap.seareport.dto.ServiceDTO;
 import br.com.fiap.seareport.dto.request.LikeRequest;
 import br.com.fiap.seareport.dto.response.LikeResponse;
 import br.com.fiap.seareport.entity.Like;
+import br.com.fiap.seareport.entity.Post;
+import br.com.fiap.seareport.entity.User;
 import br.com.fiap.seareport.repository.LikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -67,10 +69,11 @@ public class LikeService implements ServiceDTO<Like, LikeRequest, LikeResponse, 
         repo.deleteById(id);
     }
 
-    public List<Like> findByIdUser(Long id) {
-        var user = userService.findById(id);
-        if (Objects.isNull(user)) return null;
-        return repo.findByUser(user);
+    public Like findByIdUserAndIdPost(Long idUser, Long idPost) {
+        User user = userService.findById(idUser);
+        Post post = postService.findById(idPost);
+        if (Objects.isNull(user) || Objects.isNull(post)) return null;
+        return repo.findByUserAndPost(user, post);
     }
 
 
