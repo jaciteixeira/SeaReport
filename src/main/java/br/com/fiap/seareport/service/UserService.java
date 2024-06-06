@@ -79,6 +79,7 @@ public class UserService implements ServiceDTO<User, UserRequest, UserResponse, 
 
     public User findByAuth(String authId) {
         var auth = authService.findById(authId);
+        System.out.println(auth);
         return repo.findByAuth(auth);
     }
 }
