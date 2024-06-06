@@ -8,5 +8,6 @@ spring:
     show_sql: true
     hibernate:
       ddl-auto: update
+      dialect: org.mariadb.jdbc.Driver
     open-in-view: false
 
