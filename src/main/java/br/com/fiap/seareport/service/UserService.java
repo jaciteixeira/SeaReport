@@ -21,14 +21,10 @@ public class UserService implements ServiceDTO<User, UserRequest, UserResponse, 
     @Autowired
     private AuthService authService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Override
     public User toEntity(UserRequest r) {
         if (Objects.isNull(r)) return null;
         return User.builder()
-                .password(passwordEncoder.encode(r.password()))
                 .username(r.username())
                 .phoneNumber(r.phoneNumber())
                 .auth(authService.toEntity(r.auth()))
@@ -75,7 +71,7 @@ public class UserService implements ServiceDTO<User, UserRequest, UserResponse, 
 
     public User findByUsername(UserRequestLogin r) {
         var user = repo.findByUsername(r.username());
-        if (user != null && passwordEncoder.matches(r.password(), user.getPassword())){
+        if (user != null ){
             return user;
         }
         return null;

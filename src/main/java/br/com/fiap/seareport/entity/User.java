@@ -27,8 +27,6 @@ public class User extends RepresentationModel<User> {
     private String username;
 //    @Column(name = "EMAIL")
 //    private String email;
-    @Column(name = "PASSWORD")
-    private String password;
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
     @Column(name = "XP")
