@@ -4,6 +4,7 @@ import br.com.fiap.seareport.dto.request.ReportRequest;
 import br.com.fiap.seareport.dto.response.CategoryResponse;
 import br.com.fiap.seareport.dto.response.ReportResponse;
 import br.com.fiap.seareport.entity.Category;
+import br.com.fiap.seareport.exception.ResourceNotFoundException;
 import br.com.fiap.seareport.service.ReportService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class ReportController {
     ) {
 
         var entity = service.getReportsByUserId(userId);
-        if (Objects.isNull( entity ) || entity.isEmpty()) return ResponseEntity.notFound().build();
+        if (Objects.isNull( entity ) || entity.isEmpty()) throw new ResourceNotFoundException("Report not found!");
 
         Pageable pageable = PageRequest.of(
                 page,
@@ -106,8 +107,8 @@ public class ReportController {
         return ResponseEntity.ok(categorias);
     }
 
-    @PostMapping("/approve-report/{id}")
-    public ResponseEntity<ReportResponse> approveReport(@PathVariable Long id) {
+    @GetMapping("/approve-report/{id}")
+    public ResponseEntity<ReportResponse> toApproveReport(@PathVariable Long id) {
         var approved = service.approve(id);
         return ResponseEntity.ok(service.toResponse(approved));
     }

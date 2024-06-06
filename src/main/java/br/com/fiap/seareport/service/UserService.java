@@ -2,13 +2,11 @@ package br.com.fiap.seareport.service;
 
 import br.com.fiap.seareport.dto.ServiceDTO;
 import br.com.fiap.seareport.dto.request.UserRequest;
-import br.com.fiap.seareport.dto.request.UserRequestLogin;
 import br.com.fiap.seareport.dto.response.UserResponse;
 import br.com.fiap.seareport.entity.User;
 import br.com.fiap.seareport.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -61,20 +59,11 @@ public class UserService implements ServiceDTO<User, UserRequest, UserResponse, 
     public User save(UserRequest r) {
         var user = toEntity(r);
         user.setXp(0);
-//        user.setPassword(passwordEncoder.encode(r.password()));
         return repo.save(user);
     }
 
     public User save(User user){
         return repo.save(user);
-    }
-
-    public User findByUsername(UserRequestLogin r) {
-        var user = repo.findByUsername(r.username());
-        if (user != null ){
-            return user;
-        }
-        return null;
     }
 
     public User findByAuth(String authId) {
