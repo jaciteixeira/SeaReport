@@ -1,11 +1,10 @@
 spring:
   datasource:
-    url: ${DB_PROD_URL}
-    username: ${DB_PROD_USERNAME}
-    password: ${DB_PROD_PASSWORD}
+    url: jdbc:postgresql://dpg-cpgsot63e1ms73ame0p0-a:5432/seareport
+    username: admin
+    password: JYoq0qwldZL6mCiR1JsOScURwuAyCnCy
   jpa:
     show-sql: true
     open-in-view: true
     hibernate:
       ddl-auto: update
-      dialect: org.hibernate.dialect.PostgreSQLDialect
