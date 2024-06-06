@@ -71,9 +71,6 @@ public class ReportService implements ServiceDTO<Report, ReportRequest, ReportRe
 
     @Override
     public Report save(ReportRequest r) {
-        User user = userService.findById(r.userId());
-        user.setXp(user.getXp()+100);
-        userService.save(user);
         return repo.save(toEntity(r));
     }
 
@@ -88,6 +85,9 @@ public class ReportService implements ServiceDTO<Report, ReportRequest, ReportRe
     public Report approve(Long id) {
         var report = repo.findById(id).orElse(null);
         if (Objects.isNull(report)) return null;
+        var user = userService.findById(report.getUser().getId());
+        user.setXp(user.getXp() + 100);
+        userService.save(user);
         report.setApproved(true);
         repo.save(report);
         return report;

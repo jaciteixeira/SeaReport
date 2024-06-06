@@ -3,6 +3,7 @@ package br.com.fiap.seareport.controller;
 import br.com.fiap.seareport.dto.request.PostRequest;
 import br.com.fiap.seareport.dto.response.PostResponse;
 import br.com.fiap.seareport.entity.Post;
+import br.com.fiap.seareport.exception.ResourceNotFoundException;
 import br.com.fiap.seareport.service.PostService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,7 @@ public class PostController {
                 .stream().map( service::toResponse )
                 .toList();
 
-        if (Objects.isNull( posts ) || posts.isEmpty()) return ResponseEntity.notFound().build();
+    if (Objects.isNull( posts ) || posts.isEmpty()) throw new ResourceNotFoundException("Post not found");
 
         Page<PostResponse> pagina = new PageImpl<>( posts, pageable, posts.size() );
 

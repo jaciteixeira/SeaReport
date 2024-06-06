@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        margin: 10px;
+        min-height: 100vh;
+        align-items: center;
+    }
+    
+    .main {
+        min-width: 900px;
+    }
+    
+    .endpoint{
+        padding-left: 100px;
+    }
+
+
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GS1</title>
+</head>
+
+<body>
+    <main class="main">
+        <h1>Sea Report</h1>
+        <h2>Uma plataforma de denúncia de crimes ocorridos em alto-mar e áreas litorâneas com gamificação.</h2>
+        <p>Denunciar crimes no mar, como pesca ilegal e pirataria, é complicado. Atualmente, isso requer um celular com sinal, conhecimento da entidade responsável pela região, contato durante horários de atendimento e precisão na localização, o que desmotiva muitas pessoas a denunciar.
+
+            Para resolver isso, criamos a Sea Report, uma plataforma de denúncia de crimes no mar e áreas costeiras. Após baixar o aplicativo e criar uma conta, você acessa "notas da comunidade" com informações sobre crimes e previsões geradas por um algoritmo de machine learning. As denúncias podem ser feitas offline e são enviadas automaticamente quando o dispositivo se conecta à internet, direcionadas às autoridades competentes com base na localização. Isso facilita o processo de denúncia e encoraja mais pessoas a reportar crimes no mar.
+        </p>
+        <h2>ENDPOINTS DA API</h2>
+        <div class="endpoint">
+            <ol>
+                <li>
+                    <h3>USUÁRIO</h3>
+                    <ol type="a">
+                        <li>
+                            <h4>GET /user</h4>
+                            <p>Obter todos os usuários.</p>
+                            <p>Parâmetros de consulta:</p>
+                            <ul>
+                                <li><code>username</code> (opcional): Filtrar usuários pelo nome de usuário.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4>POST /user</h4>
+                            <p>Criar um novo usuário.</p>
+                            <pre>
+              <code>
+                {
+                "username":"joao_silva",
+                "password":"Joao@123",
+                "phoneNumber":"+5511987654321"
+                }
+              </code>
+            </pre>
+                        </li>
+                        <li>
+                            <h4>POST /user/auth</h4>
+                            <p>Efetuar login de usuário.</p>
+                            <pre>
+              <code>
+                {
+                "id": "yO8WwMFkN5Za9zZ6jncW7zxlJTh1",
+                "email": "joao_silva@gmail.com"
+               }
+              </code>
+            </pre>
+                        </li>
+                    </ol>
+                </li>
+                <li>
+                    <h3>RELATÓRIO</h3>
+                    <ol type="a">
+                        <li>
+                            <h4>POST /report</h4>
+                            <p>Salvar um novo relatório.</p>
+                            <pre>
+              <code>
+                {
+                  "description":"Denuncia de incidente de derramamento de óleo",
+                  "userId": 1,
+                  "category": 2,
+                  "location":{
+                    "longitude": -17.950722,
+                    "latitude": -38.718196
+                  }
+                }
+              </code>
+            </pre>
+                        </li>
+                        <li>
+                            <h4>GET /report/user/{userId}</h4>
+                            <p>Obter relatórios por ID de usuário.</p>
+                        </li>
+                        <li>
+                            <h4>GET /report/disapproved</h4>
+                            <p>Obter relatórios reprovados.</p>
+                        </li>
+                        <li>
+                            <h4>GET /report/category</h4>
+                            <p>Obter categorias de relatórios.</p>
+                        </li>
+                        <li>
+                            <h4>GET /report/approve-report/{id}</h4>
+                            <p>Aprovar os relatórios.</p>
+                        </li>
+                    </ol>
+                </li>
+                <li>
+                    <h3>POSTAGEM</h3>
+                    <ol type="a">
+                        <li>
+                            <h4>POST /post</h4>
+                            <p>Salvar uma nova postagem.</p>
+                            <pre>
+              <code>
+                {
+                  "contentPost": "Os mares desempenham um papel crucial em sustentar a vida na Terra, 
+                  fornecendo alimentos, regulando o clima e gerando oxigênio. No entanto, a saúde dos nossos 
+                  oceanos está sob crescente ameaça devido à poluição, pesca excessiva, acidificação e mudanças 
+                  climáticas. Preservar os mares é essencial para garantir a sobrevivência não apenas das 
+                  espécies marinhas, mas também da humanidade. Ações individuais, como reduzir o uso de plásticos 
+                  descartáveis, apoiar práticas de pesca sustentável e promover a conservação marinha, são cruciais 
+                  para proteger e restaurar a saúde dos nossos preciosos ecossistemas marinhos."
+                }
+              </code>
+            </pre>
+                        </li>
+                        <li>
+                            <h4>GET /post</h4>
+                            <p>Obter todas as postagens.</p>
+                            <p>Parâmetros de consulta:</p>
+                            <ul>
+                                <li><code>word</code> (opcional): Filtrar postagens por palavra-chave.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </li>
+                <li>
+                    <h3>LIKE</h3>
+                    <ol type="a">
+                        <li>
+                            <h4>POST /likes</h4>
+                            <p>Salvar um novo like.</p>
+                            <pre>
+              <code>
+                {
+                  "idUser": 1,
+                  "idPost": 2
+                }
+              </code>
+            </pre>
+                        </li>
+                        <li>
+                            <h4>GET /user/{userId}/post/{postId}</h4>
+                            <p>Obter likes por ID de usuário e ID da postagem.</p>
+                        </li>
+                        <li>
+                            <h4>DELETE /likes/{id}</h4>
+                            <p>Excluir um like pelo seu ID.</p>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+
+        <div>
+            <h2>Link Deploy</h2>
+            <h3><a href="https://seareport.onrender.com">https://seareport.onrender.com</a></h3>
+        </div>
+
+    </main>
+
+</body>
+</html>
