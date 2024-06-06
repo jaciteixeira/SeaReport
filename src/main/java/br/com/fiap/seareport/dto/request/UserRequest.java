@@ -16,10 +16,6 @@ public record UserRequest(
 //        String email,
         @NotBlank
         String username,
-        @Pattern(regexp = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}")
-        @NotBlank
-        @NotNull(message = "a senha é obrigatório!")
-        String password,
         String phoneNumber,
         Integer xp,
         @NotNull

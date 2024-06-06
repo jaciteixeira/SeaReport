@@ -1,5 +1,6 @@
 package br.com.fiap.seareport.controller;
 
+import br.com.fiap.seareport.dto.request.AuthRequest;
 import br.com.fiap.seareport.dto.request.UserRequest;
 import br.com.fiap.seareport.dto.request.UserRequestLogin;
 import br.com.fiap.seareport.dto.response.ReportResponse;
@@ -77,8 +78,8 @@ public class UserController {
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<UserResponse> login(@RequestBody String auth) {
-        User user = service.findByAuth(auth);
+    public ResponseEntity<UserResponse> login(@RequestBody @Valid AuthRequest auth) {
+        User user = service.findByAuth(auth.id());
 
         System.out.println(service.toResponse(user));
         return ResponseEntity.ok().body(service.toResponse(user));
