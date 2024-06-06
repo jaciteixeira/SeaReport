@@ -4,6 +4,8 @@ import lombok.Builder;
 
 @Builder
 public record LikeResponse(
+
+        Long id,
         String username,
         String contentPost
 ) {

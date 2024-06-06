@@ -40,6 +40,7 @@ public class LikeService implements ServiceDTO<Like, LikeRequest, LikeResponse, 
         if (Objects.isNull(user) || Objects.isNull(post)) return null;
 
         return LikeResponse.builder()
+                .id(e.getId())
                 .username(user.getUsername())
                 .contentPost(post.getContentPost())
                 .build();
