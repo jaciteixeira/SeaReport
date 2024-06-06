@@ -2,7 +2,7 @@ spring:
   application:
     name: seareport
   profiles:
-    active: desenvolvimento
+    active: producao
   thymeleaf:
     check-template-location: false
   servlet:
