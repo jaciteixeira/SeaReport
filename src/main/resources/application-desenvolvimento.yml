@@ -1,13 +1,12 @@
 spring:
   datasource:
-    url: jdbc:mariadb://${DB_SERVER:localhost}:${DB_PORT:3306}/${DB_NAME:seareport}?createDatabaseIfNotExist=true
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:root}
-  #Configuração de Mapeamento Objeto Relacional
+    url: jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL
+    username: rm99741
+    password: 080802
+    driver-class-name: oracle.jdbc.OracleDriver
   jpa:
-    show_sql: true
+    show-sql: true
+    open-in-view: false
     hibernate:
       ddl-auto: update
-      dialect: org.mariadb.jdbc.Driver
-    open-in-view: false
-
+      dialect: org.hibernate.dialect.Oracle12cDialect
