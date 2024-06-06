@@ -1,11 +1,11 @@
 spring:
   datasource:
-    url: jdbc:mariadb://${DB_PROD_SERVER:seareport-db}:${DB_PROD_PORT:3306}/${DB_PROD_NAME:SeaReport}?createDatabaseIfNotExist=true
-    username: ${DB_PROD_USERNAME:root}
-    password: ${DB_PROD_PASSWORD:root}
+    url: ${DB_PROD_URL}
+    username: ${DB_PROD_USERNAME}
+    password: ${DB_PROD_PASSWORD}
   jpa:
     show-sql: true
     open-in-view: true
     hibernate:
       ddl-auto: update
-      dialect: org.hibernate.dialect.MariaDBDialect
+      dialect: org.hibernate.dialect.PostgreSQLDialect
