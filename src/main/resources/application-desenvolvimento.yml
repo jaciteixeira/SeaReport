@@ -1,12 +1,10 @@
 spring:
   datasource:
-    url: jdbc:mariadb://${DB_SERVER:localhost}:${DB_PORT:3306}/${DB_NAME:seareport}?createDatabaseIfNotExist=true
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:root}
-  #Configuração de Mapeamento Objeto Relacional
+    url: ${DB_DESENV_URL}?createDatabaseIfNotExist=true
+    username: ${DB_DESENV_USERNAME}
+    password: ${DB_DESENV_PASSWORD}
   jpa:
-    show_sql: true
+    show-sql: true
+    open-in-view: false
     hibernate:
       ddl-auto: update
-    open-in-view: false
-

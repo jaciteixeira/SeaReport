@@ -1,10 +1,11 @@
 spring:
   datasource:
-    url: jdbc:oracle:${DB_HOMOLOG_SERVER:thin:@oracle.fiap.com.br}:${DB_HOMOLOG_PORT:1521}:${DB_HOMOLOG_NAME:ORCL}
-    username: ${DB_HOMOLOG_USERNAME:XX}
-    password: ${DB_HOMOLOG_PASSWORD:XX}
+    url: ${DB_HOMOLOG_URL}
+    username: ${DB_HOMOLOG_USERNAME}
+    password: ${DB_HOMOLOG_PASSWORD}
   jpa:
     show-sql: true
     open-in-view: false
     hibernate:
       ddl-auto: update
+      dialect: org.hibernate.dialect.Oracle12cDialect

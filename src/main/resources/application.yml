@@ -2,7 +2,7 @@ spring:
   application:
     name: seareport
   profiles:
-    active: homologacao
+    active: docker
   thymeleaf:
     check-template-location: false
   servlet:

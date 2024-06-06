@@ -13,7 +13,7 @@ import org.springframework.hateoas.RepresentationModel;
 @Builder
 @Entity
 @Table(name = "T_OP_SR_USER", uniqueConstraints = {
-        @UniqueConstraint(name = "UK_USERNAME", columnNames = "USER_NAME")
+        @UniqueConstraint(name = "UK_OP_SR_USERNAME", columnNames = "USER_NAME")
 })
 public class User extends RepresentationModel<User> {
     @Id

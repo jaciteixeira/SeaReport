@@ -1,3 +1,5 @@
+version: '3.8'
+
 networks:
   vpn-sea:
     driver: bridge
@@ -11,45 +13,44 @@ volumes:
 
 services:
 
-  seareport-db:
-
+  db:
     image: 'mariadb:latest'
     command: --default-authentication-plugin=mysql_native_password --general_log=ON --bind_address=0.0.0.0
     restart: always
     environment:
-      DB_SERVER: ${DB_SERVER:-seareport-db}
-      DB_NAME: ${DB_NAME:-seareport}
-      DB_PORT: ${DB_PORT:-3306}
-      DB_PASSWORD: ${DB_PASSWORD:-root}
-      DB_USERNAME: ${DB_USER:-root}
-      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
+      MARIADB_DATABASE: seareport
+      MARIADB_USER: seareport_user
+      MARIADB_PASSWORD: seareport_password
+      MARIADB_ROOT_PASSWORD: root
       MARIADB_ROOT_HOST: '%'
     ports:
-      - 3307:3306
-      - 3306:3306
+      - "3306:3306"
     volumes:
-      - "./mariadb-data/data:/var/lib/mysql/data/"
-      - "./mariadb-data/logs:/var/lib/mysql/logs/"
+      - "mariadb-data:/var/lib/mysql"
     networks:
       - vpn-sea
 
   seareport-app:
-
     build:
       context: .
       dockerfile: Dockerfile
     image: seareport:latest
     ports:
-      - "80:8080"
+      - "80:80"
     depends_on:
-      - seareport-db
+      - db
     environment:
-      DB_SERVER: seareport-db
-      DB_PORT: ${DB_PORT:-3306}
-      DB_NAME: ${DB_NAME:-seareport}
-      DB_USER: ${DB_USER:-root}
-      DB_PASSWORD: ${DB_PASSWORD:-root}
+      SPRING_DATASOURCE_URL: jdbc:mariadb://db:3306/seareport
+      SPRING_DATASOURCE_USERNAME: seareport_user
+      SPRING_DATASOURCE_PASSWORD: seareport_password
     volumes:
       - data-volume:/app/data
     networks:
       - vpn-sea
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://db:3306"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: always
+
