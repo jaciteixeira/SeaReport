@@ -4,6 +4,7 @@ import br.com.fiap.seareport.dto.request.LikeRequest;
 import br.com.fiap.seareport.dto.response.LikeResponse;
 import br.com.fiap.seareport.dto.response.PostResponse;
 import br.com.fiap.seareport.entity.Like;
+import br.com.fiap.seareport.exception.ResourceNotFoundException;
 import br.com.fiap.seareport.service.LikeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,8 @@ public class LikeController {
             @PathVariable Long userId,
             @PathVariable Long postId
     ) {
-
         var like = service.findByIdUserAndIdPost(userId, postId);
-        if (Objects.isNull( like)) return ResponseEntity.notFound().build();
+        if (Objects.isNull( like)) throw new ResourceNotFoundException("Like does not exist");
 
         return ResponseEntity.ok( service.toResponse(like) );
     }

@@ -2,7 +2,7 @@ spring:
   application:
     name: seareport
   profiles:
-    active: docker
+    active: desenvolvimento
   thymeleaf:
     check-template-location: false
   servlet:

@@ -2,23 +2,16 @@ package br.com.fiap.seareport.controller;
 
 import br.com.fiap.seareport.dto.request.AuthRequest;
 import br.com.fiap.seareport.dto.request.UserRequest;
-import br.com.fiap.seareport.dto.request.UserRequestLogin;
-import br.com.fiap.seareport.dto.response.ReportResponse;
 import br.com.fiap.seareport.dto.response.UserResponse;
 import br.com.fiap.seareport.entity.User;
 import br.com.fiap.seareport.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/user")
