@@ -27,9 +27,9 @@ services:
     ports:
       - 3307:3306
       - 3306:3306
-    volumes:
-      - "./mariadb-data/data:/var/lib/mysql/data/"
-      - "./mariadb-data/logs:/var/lib/mysql/logs/"
+#    volumes:
+#      - "./mariadb-data/data:/var/lib/mysql/data/"
+#      - "./mariadb-data/logs:/var/lib/mysql/logs/"
     networks:
       - vpn-sea
 
@@ -40,7 +40,7 @@ services:
       dockerfile: Dockerfile
     image: seareport:latest
     ports:
-      - "80:8080"
+      - "80:80"
     depends_on:
       - seareport-db
     environment:
