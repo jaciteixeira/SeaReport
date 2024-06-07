@@ -15,7 +15,7 @@ import org.springframework.hateoas.RepresentationModel;
 @Table(name = "T_OP_SR_USER", uniqueConstraints = {
         @UniqueConstraint(name = "UK_OP_SR_USER_ID_AUTH", columnNames = "ID_AUTH")
 })
-public class User extends RepresentationModel<User> {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_OP_SR_USER")
     @SequenceGenerator(name = "SQ_OP_SR_USER", sequenceName = "SQ_OP_SR_USER", allocationSize = 1)
@@ -27,7 +27,7 @@ public class User extends RepresentationModel<User> {
     private String phoneNumber;
     @Column(name = "XP")
     private Integer xp;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(
             name = "ID_AUTH",
             referencedColumnName = "ID_AUTH",
