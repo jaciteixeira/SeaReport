@@ -13,7 +13,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "T_OP_SR_REPORT")
+@Table(name = "T_OP_SR_REPORT", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_OP_SR_REPORT_ID_LOCATION", columnNames = "ID_LOCATION")
+})
 public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_OP_SR_REPORT")

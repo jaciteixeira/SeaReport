@@ -11,7 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "T_OP_SR_AUTH")
+@Table(name = "T_OP_SR_AUTH", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_OP_SR_EMAIL", columnNames = "EMAIL")
+})
 public class Auth {
     @Id
     @Column(name = "ID_AUTH")

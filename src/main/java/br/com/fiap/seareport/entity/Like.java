@@ -11,7 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "T_OP_SR_LIKE")
+@Table(name = "T_OP_SR_LIKE", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_OP_SR_LIKE_ID_USER_ID_POST ", columnNames = {"ID_USER", "ID_POST"})
+})
 public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_OP_SR_LIKE")
