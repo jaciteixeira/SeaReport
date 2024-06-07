@@ -13,6 +13,7 @@ public record UserRequest(
         @NotBlank
         String username,
         String phoneNumber,
+        Integer xp,
         @NotNull
         AuthRequest auth
 
