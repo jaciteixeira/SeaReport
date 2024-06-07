@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "a6190fd9-b442-47b1-a459-2f43e58addb1",
+		"_postman_id": "2e34530f-ed4f-43ff-b1f5-9b03b2600b5d",
 		"name": "SeaReport",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30321921"
+		"_exporter_id": "34313609"
 	},
 	"item": [
 		{
@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"joao_silva\",\r\n    \"password\":\"Joao@123\",\r\n    \"phoneNumber\":\"+5511987654321\",\r\n    \"auth\": {\r\n        \"id\": \"yO8WwMFkN5Za9zZ6jncW7zxlJTh1\",\r\n        \"email\": \"joao_silva@gmail.com\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"username\":\"joao Silva\",\r\n    \"xp\": 0,\r\n    \"phoneNumber\":\"+5511987654321\",\r\n    \"auth\": {\r\n        \"id\": \"yO8WwMFkN5Za9zZ6jncW7zxlJTh1\",\r\n        \"email\": \"joao_silva@gmail.com\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -87,7 +87,7 @@
 					"response": []
 				},
 				{
-					"name": "find params",
+					"name": "find All params",
 					"request": {
 						"method": "GET",
 						"header": [],
