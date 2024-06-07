@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -73,8 +75,9 @@ public class UserController {
     @PostMapping("/auth")
     public ResponseEntity<UserResponse> login(@RequestBody @Valid AuthRequest auth) {
         User user = service.findByAuth(auth.id());
-
-        System.out.println(service.toResponse(user));
+        if(Objects.isNull(user)) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok().body(service.toResponse(user));
     }
 }
