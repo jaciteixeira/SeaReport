@@ -104,6 +104,7 @@ Este guia fornece instruções passo a passo sobre como clonar e executar um pro
        {
         "username":"joao_silva",
         "phoneNumber":"+5511987654321",
+        "xp": 0
         "auth": {
           "id": "yO8WwMFkN5Za9zZ6jncW7zxlJTh1",
           "email": "joao_silva@gmail.com"
